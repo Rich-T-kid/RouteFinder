@@ -20,7 +20,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ServiceDiscoveryManager_Ping_FullMethodName = "/api.ServiceDiscoveryManager/Ping"
+	ServiceDiscoveryManager_Ping_FullMethodName              = "/api.ServiceDiscoveryManager/Ping"
+	ServiceDiscoveryManager_HeartBeat_FullMethodName         = "/api.ServiceDiscoveryManager/HeartBeat"
+	ServiceDiscoveryManager_RegisterService_FullMethodName   = "/api.ServiceDiscoveryManager/RegisterService"
+	ServiceDiscoveryManager_AddInstance_FullMethodName       = "/api.ServiceDiscoveryManager/AddInstance"
+	ServiceDiscoveryManager_UnregisterService_FullMethodName = "/api.ServiceDiscoveryManager/UnregisterService"
+	ServiceDiscoveryManager_DeleteService_FullMethodName     = "/api.ServiceDiscoveryManager/DeleteService"
+	ServiceDiscoveryManager_RenameService_FullMethodName     = "/api.ServiceDiscoveryManager/RenameService"
+	ServiceDiscoveryManager_ResolveService_FullMethodName    = "/api.ServiceDiscoveryManager/ResolveService"
+	ServiceDiscoveryManager_Metrics_FullMethodName           = "/api.ServiceDiscoveryManager/Metrics"
 )
 
 // ServiceDiscoveryManagerClient is the client API for ServiceDiscoveryManager service.
@@ -28,6 +36,14 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceDiscoveryManagerClient interface {
 	Ping(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PingReply, error)
+	HeartBeat(ctx context.Context, in *HeartBeatRequest, opts ...grpc.CallOption) (*HeartBeatResponse, error)
+	RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*Error, error)
+	AddInstance(ctx context.Context, in *AddInstanceRequest, opts ...grpc.CallOption) (*Error, error)
+	UnregisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*Error, error)
+	DeleteService(ctx context.Context, in *Service, opts ...grpc.CallOption) (*Error, error)
+	RenameService(ctx context.Context, in *RenameServiceRequest, opts ...grpc.CallOption) (*Error, error)
+	ResolveService(ctx context.Context, in *ResolveRequest, opts ...grpc.CallOption) (*ResolveServiceResponse, error)
+	Metrics(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MetricsResponse, error)
 }
 
 type serviceDiscoveryManagerClient struct {
@@ -48,11 +64,99 @@ func (c *serviceDiscoveryManagerClient) Ping(ctx context.Context, in *emptypb.Em
 	return out, nil
 }
 
+func (c *serviceDiscoveryManagerClient) HeartBeat(ctx context.Context, in *HeartBeatRequest, opts ...grpc.CallOption) (*HeartBeatResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HeartBeatResponse)
+	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_HeartBeat_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceDiscoveryManagerClient) RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*Error, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Error)
+	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_RegisterService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceDiscoveryManagerClient) AddInstance(ctx context.Context, in *AddInstanceRequest, opts ...grpc.CallOption) (*Error, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Error)
+	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_AddInstance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceDiscoveryManagerClient) UnregisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*Error, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Error)
+	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_UnregisterService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceDiscoveryManagerClient) DeleteService(ctx context.Context, in *Service, opts ...grpc.CallOption) (*Error, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Error)
+	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_DeleteService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceDiscoveryManagerClient) RenameService(ctx context.Context, in *RenameServiceRequest, opts ...grpc.CallOption) (*Error, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Error)
+	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_RenameService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceDiscoveryManagerClient) ResolveService(ctx context.Context, in *ResolveRequest, opts ...grpc.CallOption) (*ResolveServiceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResolveServiceResponse)
+	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_ResolveService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceDiscoveryManagerClient) Metrics(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MetricsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MetricsResponse)
+	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_Metrics_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceDiscoveryManagerServer is the server API for ServiceDiscoveryManager service.
 // All implementations must embed UnimplementedServiceDiscoveryManagerServer
 // for forward compatibility.
 type ServiceDiscoveryManagerServer interface {
 	Ping(context.Context, *emptypb.Empty) (*PingReply, error)
+	HeartBeat(context.Context, *HeartBeatRequest) (*HeartBeatResponse, error)
+	RegisterService(context.Context, *RegisterServiceRequest) (*Error, error)
+	AddInstance(context.Context, *AddInstanceRequest) (*Error, error)
+	UnregisterService(context.Context, *RegisterServiceRequest) (*Error, error)
+	DeleteService(context.Context, *Service) (*Error, error)
+	RenameService(context.Context, *RenameServiceRequest) (*Error, error)
+	ResolveService(context.Context, *ResolveRequest) (*ResolveServiceResponse, error)
+	Metrics(context.Context, *emptypb.Empty) (*MetricsResponse, error)
 	mustEmbedUnimplementedServiceDiscoveryManagerServer()
 }
 
@@ -65,6 +169,30 @@ type UnimplementedServiceDiscoveryManagerServer struct{}
 
 func (UnimplementedServiceDiscoveryManagerServer) Ping(context.Context, *emptypb.Empty) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
+func (UnimplementedServiceDiscoveryManagerServer) HeartBeat(context.Context, *HeartBeatRequest) (*HeartBeatResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HeartBeat not implemented")
+}
+func (UnimplementedServiceDiscoveryManagerServer) RegisterService(context.Context, *RegisterServiceRequest) (*Error, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterService not implemented")
+}
+func (UnimplementedServiceDiscoveryManagerServer) AddInstance(context.Context, *AddInstanceRequest) (*Error, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddInstance not implemented")
+}
+func (UnimplementedServiceDiscoveryManagerServer) UnregisterService(context.Context, *RegisterServiceRequest) (*Error, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnregisterService not implemented")
+}
+func (UnimplementedServiceDiscoveryManagerServer) DeleteService(context.Context, *Service) (*Error, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteService not implemented")
+}
+func (UnimplementedServiceDiscoveryManagerServer) RenameService(context.Context, *RenameServiceRequest) (*Error, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RenameService not implemented")
+}
+func (UnimplementedServiceDiscoveryManagerServer) ResolveService(context.Context, *ResolveRequest) (*ResolveServiceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResolveService not implemented")
+}
+func (UnimplementedServiceDiscoveryManagerServer) Metrics(context.Context, *emptypb.Empty) (*MetricsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Metrics not implemented")
 }
 func (UnimplementedServiceDiscoveryManagerServer) mustEmbedUnimplementedServiceDiscoveryManagerServer() {
 }
@@ -106,6 +234,150 @@ func _ServiceDiscoveryManager_Ping_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceDiscoveryManager_HeartBeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HeartBeatRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceDiscoveryManagerServer).HeartBeat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceDiscoveryManager_HeartBeat_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceDiscoveryManagerServer).HeartBeat(ctx, req.(*HeartBeatRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceDiscoveryManager_RegisterService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceDiscoveryManagerServer).RegisterService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceDiscoveryManager_RegisterService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceDiscoveryManagerServer).RegisterService(ctx, req.(*RegisterServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceDiscoveryManager_AddInstance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddInstanceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceDiscoveryManagerServer).AddInstance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceDiscoveryManager_AddInstance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceDiscoveryManagerServer).AddInstance(ctx, req.(*AddInstanceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceDiscoveryManager_UnregisterService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceDiscoveryManagerServer).UnregisterService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceDiscoveryManager_UnregisterService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceDiscoveryManagerServer).UnregisterService(ctx, req.(*RegisterServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceDiscoveryManager_DeleteService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Service)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceDiscoveryManagerServer).DeleteService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceDiscoveryManager_DeleteService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceDiscoveryManagerServer).DeleteService(ctx, req.(*Service))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceDiscoveryManager_RenameService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RenameServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceDiscoveryManagerServer).RenameService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceDiscoveryManager_RenameService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceDiscoveryManagerServer).RenameService(ctx, req.(*RenameServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceDiscoveryManager_ResolveService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResolveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceDiscoveryManagerServer).ResolveService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceDiscoveryManager_ResolveService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceDiscoveryManagerServer).ResolveService(ctx, req.(*ResolveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceDiscoveryManager_Metrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceDiscoveryManagerServer).Metrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ServiceDiscoveryManager_Metrics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceDiscoveryManagerServer).Metrics(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServiceDiscoveryManager_ServiceDesc is the grpc.ServiceDesc for ServiceDiscoveryManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -116,6 +388,38 @@ var ServiceDiscoveryManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _ServiceDiscoveryManager_Ping_Handler,
+		},
+		{
+			MethodName: "HeartBeat",
+			Handler:    _ServiceDiscoveryManager_HeartBeat_Handler,
+		},
+		{
+			MethodName: "RegisterService",
+			Handler:    _ServiceDiscoveryManager_RegisterService_Handler,
+		},
+		{
+			MethodName: "AddInstance",
+			Handler:    _ServiceDiscoveryManager_AddInstance_Handler,
+		},
+		{
+			MethodName: "UnregisterService",
+			Handler:    _ServiceDiscoveryManager_UnregisterService_Handler,
+		},
+		{
+			MethodName: "DeleteService",
+			Handler:    _ServiceDiscoveryManager_DeleteService_Handler,
+		},
+		{
+			MethodName: "RenameService",
+			Handler:    _ServiceDiscoveryManager_RenameService_Handler,
+		},
+		{
+			MethodName: "ResolveService",
+			Handler:    _ServiceDiscoveryManager_ResolveService_Handler,
+		},
+		{
+			MethodName: "Metrics",
+			Handler:    _ServiceDiscoveryManager_Metrics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
