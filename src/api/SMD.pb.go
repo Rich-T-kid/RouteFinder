@@ -77,7 +77,7 @@ func (LoadBalance) EnumDescriptor() ([]byte, []int) {
 
 type HeartBeatRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       int32                  `protobuf:"varint,1,opt,name=message,proto3" json:"message,omitempty"`
+	ServiceName   string                 `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -112,56 +112,11 @@ func (*HeartBeatRequest) Descriptor() ([]byte, []int) {
 	return file_SMD_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *HeartBeatRequest) GetMessage() int32 {
+func (x *HeartBeatRequest) GetServiceName() string {
 	if x != nil {
-		return x.Message
+		return x.ServiceName
 	}
-	return 0
-}
-
-type HeartBeatResponse struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// message + 1
-	MessagePlusOne int32 `protobuf:"varint,1,opt,name=messagePlusOne,proto3" json:"messagePlusOne,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *HeartBeatResponse) Reset() {
-	*x = HeartBeatResponse{}
-	mi := &file_SMD_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HeartBeatResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HeartBeatResponse) ProtoMessage() {}
-
-func (x *HeartBeatResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HeartBeatResponse.ProtoReflect.Descriptor instead.
-func (*HeartBeatResponse) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *HeartBeatResponse) GetMessagePlusOne() int32 {
-	if x != nil {
-		return x.MessagePlusOne
-	}
-	return 0
+	return ""
 }
 
 type PingReply struct {
@@ -174,7 +129,7 @@ type PingReply struct {
 
 func (x *PingReply) Reset() {
 	*x = PingReply{}
-	mi := &file_SMD_proto_msgTypes[2]
+	mi := &file_SMD_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -186,7 +141,7 @@ func (x *PingReply) String() string {
 func (*PingReply) ProtoMessage() {}
 
 func (x *PingReply) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[2]
+	mi := &file_SMD_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -199,7 +154,7 @@ func (x *PingReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PingReply.ProtoReflect.Descriptor instead.
 func (*PingReply) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{2}
+	return file_SMD_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *PingReply) GetMessage() string {
@@ -227,7 +182,7 @@ type RegisterServiceRequest struct {
 
 func (x *RegisterServiceRequest) Reset() {
 	*x = RegisterServiceRequest{}
-	mi := &file_SMD_proto_msgTypes[3]
+	mi := &file_SMD_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -239,7 +194,7 @@ func (x *RegisterServiceRequest) String() string {
 func (*RegisterServiceRequest) ProtoMessage() {}
 
 func (x *RegisterServiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[3]
+	mi := &file_SMD_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -252,7 +207,7 @@ func (x *RegisterServiceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterServiceRequest.ProtoReflect.Descriptor instead.
 func (*RegisterServiceRequest) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{3}
+	return file_SMD_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *RegisterServiceRequest) GetServiceName() string {
@@ -286,7 +241,7 @@ type AddInstanceRequest struct {
 
 func (x *AddInstanceRequest) Reset() {
 	*x = AddInstanceRequest{}
-	mi := &file_SMD_proto_msgTypes[4]
+	mi := &file_SMD_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -298,7 +253,7 @@ func (x *AddInstanceRequest) String() string {
 func (*AddInstanceRequest) ProtoMessage() {}
 
 func (x *AddInstanceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[4]
+	mi := &file_SMD_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -311,7 +266,7 @@ func (x *AddInstanceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddInstanceRequest.ProtoReflect.Descriptor instead.
 func (*AddInstanceRequest) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{4}
+	return file_SMD_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AddInstanceRequest) GetServiceName() string {
@@ -328,7 +283,7 @@ func (x *AddInstanceRequest) GetEndpoints() []*ServiceEndpoint {
 	return nil
 }
 
-type Error struct {
+type GenericResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SuccessCode   int32                  `protobuf:"varint,1,opt,name=successCode,proto3" json:"successCode,omitempty"`
 	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
@@ -336,21 +291,21 @@ type Error struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *Error) Reset() {
-	*x = Error{}
-	mi := &file_SMD_proto_msgTypes[5]
+func (x *GenericResponse) Reset() {
+	*x = GenericResponse{}
+	mi := &file_SMD_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *Error) String() string {
+func (x *GenericResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Error) ProtoMessage() {}
+func (*GenericResponse) ProtoMessage() {}
 
-func (x *Error) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[5]
+func (x *GenericResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_SMD_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -361,19 +316,19 @@ func (x *Error) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Error.ProtoReflect.Descriptor instead.
-func (*Error) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{5}
+// Deprecated: Use GenericResponse.ProtoReflect.Descriptor instead.
+func (*GenericResponse) Descriptor() ([]byte, []int) {
+	return file_SMD_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *Error) GetSuccessCode() int32 {
+func (x *GenericResponse) GetSuccessCode() int32 {
 	if x != nil {
 		return x.SuccessCode
 	}
 	return 0
 }
 
-func (x *Error) GetMessage() string {
+func (x *GenericResponse) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
@@ -390,7 +345,7 @@ type ServiceEndpoint struct {
 
 func (x *ServiceEndpoint) Reset() {
 	*x = ServiceEndpoint{}
-	mi := &file_SMD_proto_msgTypes[6]
+	mi := &file_SMD_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -402,7 +357,7 @@ func (x *ServiceEndpoint) String() string {
 func (*ServiceEndpoint) ProtoMessage() {}
 
 func (x *ServiceEndpoint) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[6]
+	mi := &file_SMD_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -415,7 +370,7 @@ func (x *ServiceEndpoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ServiceEndpoint.ProtoReflect.Descriptor instead.
 func (*ServiceEndpoint) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{6}
+	return file_SMD_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ServiceEndpoint) GetIP() string {
@@ -441,7 +396,7 @@ type Service struct {
 
 func (x *Service) Reset() {
 	*x = Service{}
-	mi := &file_SMD_proto_msgTypes[7]
+	mi := &file_SMD_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -453,7 +408,7 @@ func (x *Service) String() string {
 func (*Service) ProtoMessage() {}
 
 func (x *Service) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[7]
+	mi := &file_SMD_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -466,7 +421,7 @@ func (x *Service) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Service.ProtoReflect.Descriptor instead.
 func (*Service) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{7}
+	return file_SMD_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Service) GetServiceName() string {
@@ -485,7 +440,7 @@ type ResolveServiceResponse struct {
 
 func (x *ResolveServiceResponse) Reset() {
 	*x = ResolveServiceResponse{}
-	mi := &file_SMD_proto_msgTypes[8]
+	mi := &file_SMD_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -497,7 +452,7 @@ func (x *ResolveServiceResponse) String() string {
 func (*ResolveServiceResponse) ProtoMessage() {}
 
 func (x *ResolveServiceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[8]
+	mi := &file_SMD_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -510,7 +465,7 @@ func (x *ResolveServiceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResolveServiceResponse.ProtoReflect.Descriptor instead.
 func (*ResolveServiceResponse) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{8}
+	return file_SMD_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ResolveServiceResponse) GetEndpoints() []*ServiceEndpoint {
@@ -530,7 +485,7 @@ type ResolveRequest struct {
 
 func (x *ResolveRequest) Reset() {
 	*x = ResolveRequest{}
-	mi := &file_SMD_proto_msgTypes[9]
+	mi := &file_SMD_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -542,7 +497,7 @@ func (x *ResolveRequest) String() string {
 func (*ResolveRequest) ProtoMessage() {}
 
 func (x *ResolveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[9]
+	mi := &file_SMD_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -555,7 +510,7 @@ func (x *ResolveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResolveRequest.ProtoReflect.Descriptor instead.
 func (*ResolveRequest) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{9}
+	return file_SMD_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ResolveRequest) GetServiceName() string {
@@ -582,7 +537,7 @@ type RenameServiceRequest struct {
 
 func (x *RenameServiceRequest) Reset() {
 	*x = RenameServiceRequest{}
-	mi := &file_SMD_proto_msgTypes[10]
+	mi := &file_SMD_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -594,7 +549,7 @@ func (x *RenameServiceRequest) String() string {
 func (*RenameServiceRequest) ProtoMessage() {}
 
 func (x *RenameServiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[10]
+	mi := &file_SMD_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -607,7 +562,7 @@ func (x *RenameServiceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RenameServiceRequest.ProtoReflect.Descriptor instead.
 func (*RenameServiceRequest) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{10}
+	return file_SMD_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *RenameServiceRequest) GetOldServiceName() string {
@@ -634,7 +589,7 @@ type MetricsResponse struct {
 
 func (x *MetricsResponse) Reset() {
 	*x = MetricsResponse{}
-	mi := &file_SMD_proto_msgTypes[11]
+	mi := &file_SMD_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -646,7 +601,7 @@ func (x *MetricsResponse) String() string {
 func (*MetricsResponse) ProtoMessage() {}
 
 func (x *MetricsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[11]
+	mi := &file_SMD_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +614,7 @@ func (x *MetricsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetricsResponse.ProtoReflect.Descriptor instead.
 func (*MetricsResponse) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{11}
+	return file_SMD_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *MetricsResponse) GetServices() []*MetricsResponseServiceMetric {
@@ -674,13 +629,14 @@ type MetricsResponseServiceMetric struct {
 	ServiceName   string                 `protobuf:"bytes,1,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
 	NumEndpoints  int32                  `protobuf:"varint,2,opt,name=num_endpoints,json=numEndpoints,proto3" json:"num_endpoints,omitempty"`
 	Algo          LoadBalance            `protobuf:"varint,3,opt,name=algo,proto3,enum=api.LoadBalance" json:"algo,omitempty"`
+	Endpoints     []*ServiceEndpoint     `protobuf:"bytes,4,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *MetricsResponseServiceMetric) Reset() {
 	*x = MetricsResponseServiceMetric{}
-	mi := &file_SMD_proto_msgTypes[12]
+	mi := &file_SMD_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -692,7 +648,7 @@ func (x *MetricsResponseServiceMetric) String() string {
 func (*MetricsResponseServiceMetric) ProtoMessage() {}
 
 func (x *MetricsResponseServiceMetric) ProtoReflect() protoreflect.Message {
-	mi := &file_SMD_proto_msgTypes[12]
+	mi := &file_SMD_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -705,7 +661,7 @@ func (x *MetricsResponseServiceMetric) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetricsResponseServiceMetric.ProtoReflect.Descriptor instead.
 func (*MetricsResponseServiceMetric) Descriptor() ([]byte, []int) {
-	return file_SMD_proto_rawDescGZIP(), []int{11, 0}
+	return file_SMD_proto_rawDescGZIP(), []int{10, 0}
 }
 
 func (x *MetricsResponseServiceMetric) GetServiceName() string {
@@ -729,15 +685,20 @@ func (x *MetricsResponseServiceMetric) GetAlgo() LoadBalance {
 	return LoadBalance_LOAD_BALANCE_NONE
 }
 
+func (x *MetricsResponseServiceMetric) GetEndpoints() []*ServiceEndpoint {
+	if x != nil {
+		return x.Endpoints
+	}
+	return nil
+}
+
 var File_SMD_proto protoreflect.FileDescriptor
 
 const file_SMD_proto_rawDesc = "" +
 	"\n" +
-	"\tSMD.proto\x12\x03api\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\",\n" +
-	"\x10HeartBeatRequest\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\x05R\amessage\";\n" +
-	"\x11HeartBeatResponse\x12&\n" +
-	"\x0emessagePlusOne\x18\x01 \x01(\x05R\x0emessagePlusOne\"_\n" +
+	"\tSMD.proto\x12\x03api\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgoogle/protobuf/empty.proto\"5\n" +
+	"\x10HeartBeatRequest\x12!\n" +
+	"\fservice_name\x18\x01 \x01(\tR\vserviceName\"_\n" +
 	"\tPingReply\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x128\n" +
 	"\ttimestamp\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"\x95\x01\n" +
@@ -747,8 +708,8 @@ const file_SMD_proto_rawDesc = "" +
 	"\x04algo\x18\x03 \x01(\x0e2\x10.api.LoadBalanceR\x04algo\"k\n" +
 	"\x12AddInstanceRequest\x12!\n" +
 	"\fservice_name\x18\x01 \x01(\tR\vserviceName\x122\n" +
-	"\tendpoints\x18\x02 \x03(\v2\x14.api.ServiceEndpointR\tendpoints\"C\n" +
-	"\x05Error\x12 \n" +
+	"\tendpoints\x18\x02 \x03(\v2\x14.api.ServiceEndpointR\tendpoints\"M\n" +
+	"\x0fGenericResponse\x12 \n" +
 	"\vsuccessCode\x18\x01 \x01(\x05R\vsuccessCode\x12\x18\n" +
 	"\amessage\x18\x02 \x01(\tR\amessage\"5\n" +
 	"\x0fServiceEndpoint\x12\x0e\n" +
@@ -763,31 +724,27 @@ const file_SMD_proto_rawDesc = "" +
 	"\vresolveMany\x18\x02 \x01(\bR\vresolveMany\"j\n" +
 	"\x14RenameServiceRequest\x12(\n" +
 	"\x10old_service_name\x18\x01 \x01(\tR\x0eoldServiceName\x12(\n" +
-	"\x10new_service_name\x18\x02 \x01(\tR\x0enewServiceName\"\xd0\x01\n" +
+	"\x10new_service_name\x18\x02 \x01(\tR\x0enewServiceName\"\x85\x02\n" +
 	"\x0fMetricsResponse\x12>\n" +
-	"\bservices\x18\x01 \x03(\v2\".api.MetricsResponse.serviceMetricR\bservices\x1a}\n" +
+	"\bservices\x18\x01 \x03(\v2\".api.MetricsResponse.serviceMetricR\bservices\x1a\xb1\x01\n" +
 	"\rserviceMetric\x12!\n" +
 	"\fservice_name\x18\x01 \x01(\tR\vserviceName\x12#\n" +
 	"\rnum_endpoints\x18\x02 \x01(\x05R\fnumEndpoints\x12$\n" +
-	"\x04algo\x18\x03 \x01(\x0e2\x10.api.LoadBalanceR\x04algo*v\n" +
+	"\x04algo\x18\x03 \x01(\x0e2\x10.api.LoadBalanceR\x04algo\x122\n" +
+	"\tendpoints\x18\x04 \x03(\v2\x14.api.ServiceEndpointR\tendpoints*v\n" +
 	"\vLoadBalance\x12\x15\n" +
 	"\x11LOAD_BALANCE_NONE\x10\x00\x12\x1c\n" +
 	"\x18LOAD_BALANCE_ROUND_ROBIN\x10\x01\x12\x19\n" +
 	"\x15LOAD_BALANCE_URL_HASH\x10\x02\x12\x17\n" +
-	"\x13LOAD_BALANCE_RANDOM\x10\x032\xa5\x04\n" +
+	"\x13LOAD_BALANCE_RANDOM\x10\x032\xd7\x04\n" +
 	"\x17ServiceDiscoveryManager\x120\n" +
 	"\x04Ping\x12\x16.google.protobuf.Empty\x1a\x0e.api.PingReply\"\x00\x12<\n" +
-	"\tHeartBeat\x12\x15.api.HeartBeatRequest\x1a\x16.api.HeartBeatResponse\"\x00\x12<\n" +
-	"\x0fRegisterService\x12\x1b.api.RegisterServiceRequest\x1a\n" +
-	".api.Error\"\x00\x124\n" +
-	"\vAddInstance\x12\x17.api.AddInstanceRequest\x1a\n" +
-	".api.Error\"\x00\x12>\n" +
-	"\x11UnregisterService\x12\x1b.api.RegisterServiceRequest\x1a\n" +
-	".api.Error\"\x00\x12+\n" +
-	"\rDeleteService\x12\f.api.Service\x1a\n" +
-	".api.Error\"\x00\x128\n" +
-	"\rRenameService\x12\x19.api.RenameServiceRequest\x1a\n" +
-	".api.Error\"\x00\x12D\n" +
+	"\tHeartBeat\x12\x15.api.HeartBeatRequest\x1a\x16.google.protobuf.Empty\"\x00\x12F\n" +
+	"\x0fRegisterService\x12\x1b.api.RegisterServiceRequest\x1a\x14.api.GenericResponse\"\x00\x12>\n" +
+	"\vAddInstance\x12\x17.api.AddInstanceRequest\x1a\x14.api.GenericResponse\"\x00\x12H\n" +
+	"\x11UnregisterService\x12\x1b.api.RegisterServiceRequest\x1a\x14.api.GenericResponse\"\x00\x125\n" +
+	"\rDeleteService\x12\f.api.Service\x1a\x14.api.GenericResponse\"\x00\x12B\n" +
+	"\rRenameService\x12\x19.api.RenameServiceRequest\x1a\x14.api.GenericResponse\"\x00\x12D\n" +
 	"\x0eResolveService\x12\x13.api.ResolveRequest\x1a\x1b.api.ResolveServiceResponse\"\x00\x129\n" +
 	"\aMetrics\x12\x16.google.protobuf.Empty\x1a\x14.api.MetricsResponse\"\x00B0Z.github.com/richardbaah/RouteFinder/src/api;apib\x06proto3"
 
@@ -804,56 +761,56 @@ func file_SMD_proto_rawDescGZIP() []byte {
 }
 
 var file_SMD_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_SMD_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_SMD_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_SMD_proto_goTypes = []any{
 	(LoadBalance)(0),                     // 0: api.LoadBalance
 	(*HeartBeatRequest)(nil),             // 1: api.HeartBeatRequest
-	(*HeartBeatResponse)(nil),            // 2: api.HeartBeatResponse
-	(*PingReply)(nil),                    // 3: api.PingReply
-	(*RegisterServiceRequest)(nil),       // 4: api.RegisterServiceRequest
-	(*AddInstanceRequest)(nil),           // 5: api.AddInstanceRequest
-	(*Error)(nil),                        // 6: api.Error
-	(*ServiceEndpoint)(nil),              // 7: api.ServiceEndpoint
-	(*Service)(nil),                      // 8: api.Service
-	(*ResolveServiceResponse)(nil),       // 9: api.ResolveServiceResponse
-	(*ResolveRequest)(nil),               // 10: api.ResolveRequest
-	(*RenameServiceRequest)(nil),         // 11: api.RenameServiceRequest
-	(*MetricsResponse)(nil),              // 12: api.MetricsResponse
-	(*MetricsResponseServiceMetric)(nil), // 13: api.MetricsResponse.serviceMetric
-	(*timestamppb.Timestamp)(nil),        // 14: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                // 15: google.protobuf.Empty
+	(*PingReply)(nil),                    // 2: api.PingReply
+	(*RegisterServiceRequest)(nil),       // 3: api.RegisterServiceRequest
+	(*AddInstanceRequest)(nil),           // 4: api.AddInstanceRequest
+	(*GenericResponse)(nil),              // 5: api.GenericResponse
+	(*ServiceEndpoint)(nil),              // 6: api.ServiceEndpoint
+	(*Service)(nil),                      // 7: api.Service
+	(*ResolveServiceResponse)(nil),       // 8: api.ResolveServiceResponse
+	(*ResolveRequest)(nil),               // 9: api.ResolveRequest
+	(*RenameServiceRequest)(nil),         // 10: api.RenameServiceRequest
+	(*MetricsResponse)(nil),              // 11: api.MetricsResponse
+	(*MetricsResponseServiceMetric)(nil), // 12: api.MetricsResponse.serviceMetric
+	(*timestamppb.Timestamp)(nil),        // 13: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                // 14: google.protobuf.Empty
 }
 var file_SMD_proto_depIdxs = []int32{
-	14, // 0: api.PingReply.timestamp:type_name -> google.protobuf.Timestamp
-	7,  // 1: api.RegisterServiceRequest.endpoints:type_name -> api.ServiceEndpoint
+	13, // 0: api.PingReply.timestamp:type_name -> google.protobuf.Timestamp
+	6,  // 1: api.RegisterServiceRequest.endpoints:type_name -> api.ServiceEndpoint
 	0,  // 2: api.RegisterServiceRequest.algo:type_name -> api.LoadBalance
-	7,  // 3: api.AddInstanceRequest.endpoints:type_name -> api.ServiceEndpoint
-	7,  // 4: api.ResolveServiceResponse.endpoints:type_name -> api.ServiceEndpoint
-	13, // 5: api.MetricsResponse.services:type_name -> api.MetricsResponse.serviceMetric
+	6,  // 3: api.AddInstanceRequest.endpoints:type_name -> api.ServiceEndpoint
+	6,  // 4: api.ResolveServiceResponse.endpoints:type_name -> api.ServiceEndpoint
+	12, // 5: api.MetricsResponse.services:type_name -> api.MetricsResponse.serviceMetric
 	0,  // 6: api.MetricsResponse.serviceMetric.algo:type_name -> api.LoadBalance
-	15, // 7: api.ServiceDiscoveryManager.Ping:input_type -> google.protobuf.Empty
-	1,  // 8: api.ServiceDiscoveryManager.HeartBeat:input_type -> api.HeartBeatRequest
-	4,  // 9: api.ServiceDiscoveryManager.RegisterService:input_type -> api.RegisterServiceRequest
-	5,  // 10: api.ServiceDiscoveryManager.AddInstance:input_type -> api.AddInstanceRequest
-	4,  // 11: api.ServiceDiscoveryManager.UnregisterService:input_type -> api.RegisterServiceRequest
-	8,  // 12: api.ServiceDiscoveryManager.DeleteService:input_type -> api.Service
-	11, // 13: api.ServiceDiscoveryManager.RenameService:input_type -> api.RenameServiceRequest
-	10, // 14: api.ServiceDiscoveryManager.ResolveService:input_type -> api.ResolveRequest
-	15, // 15: api.ServiceDiscoveryManager.Metrics:input_type -> google.protobuf.Empty
-	3,  // 16: api.ServiceDiscoveryManager.Ping:output_type -> api.PingReply
-	2,  // 17: api.ServiceDiscoveryManager.HeartBeat:output_type -> api.HeartBeatResponse
-	6,  // 18: api.ServiceDiscoveryManager.RegisterService:output_type -> api.Error
-	6,  // 19: api.ServiceDiscoveryManager.AddInstance:output_type -> api.Error
-	6,  // 20: api.ServiceDiscoveryManager.UnregisterService:output_type -> api.Error
-	6,  // 21: api.ServiceDiscoveryManager.DeleteService:output_type -> api.Error
-	6,  // 22: api.ServiceDiscoveryManager.RenameService:output_type -> api.Error
-	9,  // 23: api.ServiceDiscoveryManager.ResolveService:output_type -> api.ResolveServiceResponse
-	12, // 24: api.ServiceDiscoveryManager.Metrics:output_type -> api.MetricsResponse
-	16, // [16:25] is the sub-list for method output_type
-	7,  // [7:16] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	6,  // 7: api.MetricsResponse.serviceMetric.endpoints:type_name -> api.ServiceEndpoint
+	14, // 8: api.ServiceDiscoveryManager.Ping:input_type -> google.protobuf.Empty
+	1,  // 9: api.ServiceDiscoveryManager.HeartBeat:input_type -> api.HeartBeatRequest
+	3,  // 10: api.ServiceDiscoveryManager.RegisterService:input_type -> api.RegisterServiceRequest
+	4,  // 11: api.ServiceDiscoveryManager.AddInstance:input_type -> api.AddInstanceRequest
+	3,  // 12: api.ServiceDiscoveryManager.UnregisterService:input_type -> api.RegisterServiceRequest
+	7,  // 13: api.ServiceDiscoveryManager.DeleteService:input_type -> api.Service
+	10, // 14: api.ServiceDiscoveryManager.RenameService:input_type -> api.RenameServiceRequest
+	9,  // 15: api.ServiceDiscoveryManager.ResolveService:input_type -> api.ResolveRequest
+	14, // 16: api.ServiceDiscoveryManager.Metrics:input_type -> google.protobuf.Empty
+	2,  // 17: api.ServiceDiscoveryManager.Ping:output_type -> api.PingReply
+	14, // 18: api.ServiceDiscoveryManager.HeartBeat:output_type -> google.protobuf.Empty
+	5,  // 19: api.ServiceDiscoveryManager.RegisterService:output_type -> api.GenericResponse
+	5,  // 20: api.ServiceDiscoveryManager.AddInstance:output_type -> api.GenericResponse
+	5,  // 21: api.ServiceDiscoveryManager.UnregisterService:output_type -> api.GenericResponse
+	5,  // 22: api.ServiceDiscoveryManager.DeleteService:output_type -> api.GenericResponse
+	5,  // 23: api.ServiceDiscoveryManager.RenameService:output_type -> api.GenericResponse
+	8,  // 24: api.ServiceDiscoveryManager.ResolveService:output_type -> api.ResolveServiceResponse
+	11, // 25: api.ServiceDiscoveryManager.Metrics:output_type -> api.MetricsResponse
+	17, // [17:26] is the sub-list for method output_type
+	8,  // [8:17] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_SMD_proto_init() }
@@ -867,7 +824,7 @@ func file_SMD_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_SMD_proto_rawDesc), len(file_SMD_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   13,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

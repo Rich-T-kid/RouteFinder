@@ -36,12 +36,12 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceDiscoveryManagerClient interface {
 	Ping(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PingReply, error)
-	HeartBeat(ctx context.Context, in *HeartBeatRequest, opts ...grpc.CallOption) (*HeartBeatResponse, error)
-	RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*Error, error)
-	AddInstance(ctx context.Context, in *AddInstanceRequest, opts ...grpc.CallOption) (*Error, error)
-	UnregisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*Error, error)
-	DeleteService(ctx context.Context, in *Service, opts ...grpc.CallOption) (*Error, error)
-	RenameService(ctx context.Context, in *RenameServiceRequest, opts ...grpc.CallOption) (*Error, error)
+	HeartBeat(ctx context.Context, in *HeartBeatRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	AddInstance(ctx context.Context, in *AddInstanceRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	UnregisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*GenericResponse, error)
+	DeleteService(ctx context.Context, in *Service, opts ...grpc.CallOption) (*GenericResponse, error)
+	RenameService(ctx context.Context, in *RenameServiceRequest, opts ...grpc.CallOption) (*GenericResponse, error)
 	ResolveService(ctx context.Context, in *ResolveRequest, opts ...grpc.CallOption) (*ResolveServiceResponse, error)
 	Metrics(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*MetricsResponse, error)
 }
@@ -64,9 +64,9 @@ func (c *serviceDiscoveryManagerClient) Ping(ctx context.Context, in *emptypb.Em
 	return out, nil
 }
 
-func (c *serviceDiscoveryManagerClient) HeartBeat(ctx context.Context, in *HeartBeatRequest, opts ...grpc.CallOption) (*HeartBeatResponse, error) {
+func (c *serviceDiscoveryManagerClient) HeartBeat(ctx context.Context, in *HeartBeatRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HeartBeatResponse)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_HeartBeat_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -74,9 +74,9 @@ func (c *serviceDiscoveryManagerClient) HeartBeat(ctx context.Context, in *Heart
 	return out, nil
 }
 
-func (c *serviceDiscoveryManagerClient) RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*Error, error) {
+func (c *serviceDiscoveryManagerClient) RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Error)
+	out := new(GenericResponse)
 	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_RegisterService_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -84,9 +84,9 @@ func (c *serviceDiscoveryManagerClient) RegisterService(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *serviceDiscoveryManagerClient) AddInstance(ctx context.Context, in *AddInstanceRequest, opts ...grpc.CallOption) (*Error, error) {
+func (c *serviceDiscoveryManagerClient) AddInstance(ctx context.Context, in *AddInstanceRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Error)
+	out := new(GenericResponse)
 	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_AddInstance_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -94,9 +94,9 @@ func (c *serviceDiscoveryManagerClient) AddInstance(ctx context.Context, in *Add
 	return out, nil
 }
 
-func (c *serviceDiscoveryManagerClient) UnregisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*Error, error) {
+func (c *serviceDiscoveryManagerClient) UnregisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Error)
+	out := new(GenericResponse)
 	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_UnregisterService_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -104,9 +104,9 @@ func (c *serviceDiscoveryManagerClient) UnregisterService(ctx context.Context, i
 	return out, nil
 }
 
-func (c *serviceDiscoveryManagerClient) DeleteService(ctx context.Context, in *Service, opts ...grpc.CallOption) (*Error, error) {
+func (c *serviceDiscoveryManagerClient) DeleteService(ctx context.Context, in *Service, opts ...grpc.CallOption) (*GenericResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Error)
+	out := new(GenericResponse)
 	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_DeleteService_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -114,9 +114,9 @@ func (c *serviceDiscoveryManagerClient) DeleteService(ctx context.Context, in *S
 	return out, nil
 }
 
-func (c *serviceDiscoveryManagerClient) RenameService(ctx context.Context, in *RenameServiceRequest, opts ...grpc.CallOption) (*Error, error) {
+func (c *serviceDiscoveryManagerClient) RenameService(ctx context.Context, in *RenameServiceRequest, opts ...grpc.CallOption) (*GenericResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Error)
+	out := new(GenericResponse)
 	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_RenameService_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -149,12 +149,12 @@ func (c *serviceDiscoveryManagerClient) Metrics(ctx context.Context, in *emptypb
 // for forward compatibility.
 type ServiceDiscoveryManagerServer interface {
 	Ping(context.Context, *emptypb.Empty) (*PingReply, error)
-	HeartBeat(context.Context, *HeartBeatRequest) (*HeartBeatResponse, error)
-	RegisterService(context.Context, *RegisterServiceRequest) (*Error, error)
-	AddInstance(context.Context, *AddInstanceRequest) (*Error, error)
-	UnregisterService(context.Context, *RegisterServiceRequest) (*Error, error)
-	DeleteService(context.Context, *Service) (*Error, error)
-	RenameService(context.Context, *RenameServiceRequest) (*Error, error)
+	HeartBeat(context.Context, *HeartBeatRequest) (*emptypb.Empty, error)
+	RegisterService(context.Context, *RegisterServiceRequest) (*GenericResponse, error)
+	AddInstance(context.Context, *AddInstanceRequest) (*GenericResponse, error)
+	UnregisterService(context.Context, *RegisterServiceRequest) (*GenericResponse, error)
+	DeleteService(context.Context, *Service) (*GenericResponse, error)
+	RenameService(context.Context, *RenameServiceRequest) (*GenericResponse, error)
 	ResolveService(context.Context, *ResolveRequest) (*ResolveServiceResponse, error)
 	Metrics(context.Context, *emptypb.Empty) (*MetricsResponse, error)
 	mustEmbedUnimplementedServiceDiscoveryManagerServer()
@@ -170,22 +170,22 @@ type UnimplementedServiceDiscoveryManagerServer struct{}
 func (UnimplementedServiceDiscoveryManagerServer) Ping(context.Context, *emptypb.Empty) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
-func (UnimplementedServiceDiscoveryManagerServer) HeartBeat(context.Context, *HeartBeatRequest) (*HeartBeatResponse, error) {
+func (UnimplementedServiceDiscoveryManagerServer) HeartBeat(context.Context, *HeartBeatRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HeartBeat not implemented")
 }
-func (UnimplementedServiceDiscoveryManagerServer) RegisterService(context.Context, *RegisterServiceRequest) (*Error, error) {
+func (UnimplementedServiceDiscoveryManagerServer) RegisterService(context.Context, *RegisterServiceRequest) (*GenericResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterService not implemented")
 }
-func (UnimplementedServiceDiscoveryManagerServer) AddInstance(context.Context, *AddInstanceRequest) (*Error, error) {
+func (UnimplementedServiceDiscoveryManagerServer) AddInstance(context.Context, *AddInstanceRequest) (*GenericResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddInstance not implemented")
 }
-func (UnimplementedServiceDiscoveryManagerServer) UnregisterService(context.Context, *RegisterServiceRequest) (*Error, error) {
+func (UnimplementedServiceDiscoveryManagerServer) UnregisterService(context.Context, *RegisterServiceRequest) (*GenericResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnregisterService not implemented")
 }
-func (UnimplementedServiceDiscoveryManagerServer) DeleteService(context.Context, *Service) (*Error, error) {
+func (UnimplementedServiceDiscoveryManagerServer) DeleteService(context.Context, *Service) (*GenericResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteService not implemented")
 }
-func (UnimplementedServiceDiscoveryManagerServer) RenameService(context.Context, *RenameServiceRequest) (*Error, error) {
+func (UnimplementedServiceDiscoveryManagerServer) RenameService(context.Context, *RenameServiceRequest) (*GenericResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RenameService not implemented")
 }
 func (UnimplementedServiceDiscoveryManagerServer) ResolveService(context.Context, *ResolveRequest) (*ResolveServiceResponse, error) {

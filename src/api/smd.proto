@@ -3,26 +3,22 @@ syntax = "proto3";
 package api;
 option go_package = "github.com/richardbaah/RouteFinder/src/api;api";
 
-import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 service ServiceDiscoveryManager{
     rpc Ping(google.protobuf.Empty) returns (PingReply) {} // health check for server
-    rpc HeartBeat(HeartBeatRequest) returns (HeartBeatResponse) {} // sends out int every X ms and expects int + 1 back
-    rpc RegisterService(RegisterServiceRequest) returns (Error) {} // add service - add multiple endpoints
-    rpc AddInstance(AddInstanceRequest) returns (Error) {} // add endpoints - doesnt add service if doesnt exist
-    rpc UnregisterService(RegisterServiceRequest) returns (Error) {} // remove endpoints - doesnt remove service if no endpoints
-    rpc DeleteService(Service) returns (Error) {} // remove service and all its endpoints
-    rpc RenameService(RenameServiceRequest) returns (Error) {} // rename service
+    rpc HeartBeat(HeartBeatRequest) returns (google.protobuf.Empty) {} // sends out int every X ms and expects int + 1 back
+    rpc RegisterService(RegisterServiceRequest) returns (GenericResponse) {} // add service - add multiple endpoints
+    rpc AddInstance(AddInstanceRequest) returns (GenericResponse) {} // add endpoints - doesnt add service if doesnt exist
+    rpc UnregisterService(RegisterServiceRequest) returns (GenericResponse) {} // remove endpoints - doesnt remove service if no endpoints
+    rpc DeleteService(Service) returns (GenericResponse) {} // remove service and all its endpoints
+    rpc RenameService(RenameServiceRequest) returns (GenericResponse) {} // rename service
     rpc ResolveService(ResolveRequest) returns (ResolveServiceResponse) {} // get all healthy endpoints of a service
     rpc Metrics(google.protobuf.Empty) returns (MetricsResponse) {} // get all services
 }
 message HeartBeatRequest{
-    int32 message = 1;
-}
-message HeartBeatResponse{
-    // message + 1 
-    int32 messagePlusOne = 1;
+    string service_name = 1;
 }
 message PingReply{
     string message = 1;
@@ -39,7 +35,7 @@ message AddInstanceRequest {
     repeated ServiceEndpoint endpoints = 2;
 }
 
-message Error{
+message GenericResponse{
     int32 successCode = 1;
     string message = 2;
 }
@@ -77,6 +73,7 @@ message MetricsResponse{
         string service_name = 1;
         int32 num_endpoints = 2;
         LoadBalance algo = 3;
+        repeated ServiceEndpoint endpoints = 4;
     }
     repeated serviceMetric services = 1;
     

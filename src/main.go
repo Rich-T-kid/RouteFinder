@@ -15,7 +15,9 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	grpcServer := grpc.NewServer()
-	api.RegisterServiceDiscoveryManagerServer(grpcServer, &api.Server{})
+	api.RegisterServiceDiscoveryManagerServer(grpcServer, &api.Server{
+		Manager: api.NewSDM(10),
+	})
 	println("gRPC server listening on port 50051")
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
