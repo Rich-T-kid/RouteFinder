@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package api;
+option go_package = "github.com/richardbaah/RouteFinder/src/api;api";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service ServiceDiscoveryManager{
+    rpc Ping(google.protobuf.Empty) returns (PingReply) {}
+}
+
+message PingReply{
+    string message = 1;
+    google.protobuf.Timestamp timestamp = 2;
+}
+
+
+
+/*
+(pre-reqs)
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+export PATH="$(go env GOPATH)/bin:$PATH"
+
+
+(To Compile this proto file)
+protoc \
+  --go_out=.                # generate Go types (messages, enums) into .
+  --go_opt=paths=source_relative   # write each output file next to its .proto
+  --go-grpc_out=.           # generate gRPC client/server interfaces into .
+  --go-grpc_opt=paths=source_relative  # same “next to .proto” behavior
+  smd.proto          # input .proto file
+
+
+Run go get afterwards to add the new files to your go.mod
+*/
