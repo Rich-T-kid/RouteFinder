@@ -21,7 +21,6 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	ServiceDiscoveryManager_Ping_FullMethodName              = "/api.ServiceDiscoveryManager/Ping"
-	ServiceDiscoveryManager_HeartBeat_FullMethodName         = "/api.ServiceDiscoveryManager/HeartBeat"
 	ServiceDiscoveryManager_RegisterService_FullMethodName   = "/api.ServiceDiscoveryManager/RegisterService"
 	ServiceDiscoveryManager_AddInstance_FullMethodName       = "/api.ServiceDiscoveryManager/AddInstance"
 	ServiceDiscoveryManager_UnregisterService_FullMethodName = "/api.ServiceDiscoveryManager/UnregisterService"
@@ -36,7 +35,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceDiscoveryManagerClient interface {
 	Ping(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PingReply, error)
-	HeartBeat(ctx context.Context, in *HeartBeatRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	RegisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*GenericResponse, error)
 	AddInstance(ctx context.Context, in *AddInstanceRequest, opts ...grpc.CallOption) (*GenericResponse, error)
 	UnregisterService(ctx context.Context, in *RegisterServiceRequest, opts ...grpc.CallOption) (*GenericResponse, error)
@@ -58,16 +56,6 @@ func (c *serviceDiscoveryManagerClient) Ping(ctx context.Context, in *emptypb.Em
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PingReply)
 	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_Ping_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *serviceDiscoveryManagerClient) HeartBeat(ctx context.Context, in *HeartBeatRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, ServiceDiscoveryManager_HeartBeat_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +137,6 @@ func (c *serviceDiscoveryManagerClient) Metrics(ctx context.Context, in *emptypb
 // for forward compatibility.
 type ServiceDiscoveryManagerServer interface {
 	Ping(context.Context, *emptypb.Empty) (*PingReply, error)
-	HeartBeat(context.Context, *HeartBeatRequest) (*emptypb.Empty, error)
 	RegisterService(context.Context, *RegisterServiceRequest) (*GenericResponse, error)
 	AddInstance(context.Context, *AddInstanceRequest) (*GenericResponse, error)
 	UnregisterService(context.Context, *RegisterServiceRequest) (*GenericResponse, error)
@@ -169,9 +156,6 @@ type UnimplementedServiceDiscoveryManagerServer struct{}
 
 func (UnimplementedServiceDiscoveryManagerServer) Ping(context.Context, *emptypb.Empty) (*PingReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
-}
-func (UnimplementedServiceDiscoveryManagerServer) HeartBeat(context.Context, *HeartBeatRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HeartBeat not implemented")
 }
 func (UnimplementedServiceDiscoveryManagerServer) RegisterService(context.Context, *RegisterServiceRequest) (*GenericResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterService not implemented")
@@ -230,24 +214,6 @@ func _ServiceDiscoveryManager_Ping_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ServiceDiscoveryManagerServer).Ping(ctx, req.(*emptypb.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ServiceDiscoveryManager_HeartBeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HeartBeatRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ServiceDiscoveryManagerServer).HeartBeat(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ServiceDiscoveryManager_HeartBeat_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceDiscoveryManagerServer).HeartBeat(ctx, req.(*HeartBeatRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -388,10 +354,6 @@ var ServiceDiscoveryManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ping",
 			Handler:    _ServiceDiscoveryManager_Ping_Handler,
-		},
-		{
-			MethodName: "HeartBeat",
-			Handler:    _ServiceDiscoveryManager_HeartBeat_Handler,
 		},
 		{
 			MethodName: "RegisterService",

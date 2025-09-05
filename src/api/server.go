@@ -12,10 +12,10 @@ import (
 )
 
 var (
-	ErrServiceDoesntExist = errors.New("service doesnt exist")
-	ErrNameTaken          = errors.New("service name taken")
-	Success               = int32(200)
-	Failure               = int32(500)
+	ErrServiceDoesNotExist = errors.New("service does not exist")
+	ErrNameTaken           = errors.New("service name taken")
+	Success                = int32(200)
+	Failure                = int32(500)
 )
 
 type EndpointService struct {
@@ -96,36 +96,53 @@ func (s *SDM) registerService(serviceName string, endpoints []string, algo strin
 	if s.nametaken(serviceName) {
 		return ErrNameTaken
 	}
-	if !s.validAlgo(algo) {
-		algo = "round_robin" // default algo
+	lbValue, ok := LoadBalance_value[strings.ToUpper(algo)]
+	if !ok || LoadBalance(lbValue) == LoadBalance_LOAD_BALANCE_NONE || !s.validAlgo(algo) {
+		algo = LoadBalance_name[int32(LoadBalance_LOAD_BALANCE_ROUND_ROBIN)]
 	}
+
 	newService := newEndpointService(serviceName, endpoints, algo)
 	s.DataStore[serviceName] = newService
 	return nil
 }
 func (s *SDM) addInstance(serviceName string, endpoint string) error {
 	if !s.nametaken(serviceName) {
-		return ErrServiceDoesntExist
+		return ErrServiceDoesNotExist
 	}
 	service := s.DataStore[serviceName]
-	if !existInList(endpoint, service.Instances) {
+	if existInList(endpoint, service.Instances) {
+		fmt.Printf("Endpoint %s already exists for service %s\n", endpoint, serviceName)
 		return nil // instance already exists
 	}
 	service.Instances = append(service.Instances, endpoint)
 	s.DataStore[serviceName] = service
 	return nil
 }
+func (s *SDM) batchAddInstance(serviceName string, endpoints []string) error {
+	for _, endpoint := range endpoints {
+		err := s.addInstance(serviceName, endpoint)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
 func (s *SDM) unregisterService(serviceName string, endpoints []string) error {
 	if !s.nametaken(serviceName) {
-		return ErrServiceDoesntExist
+		return ErrServiceDoesNotExist
 	}
 	service := s.DataStore[serviceName]
 	var updatedInstances []string
 	for _, instance := range service.Instances {
+		instaceExist := false
 		for _, endpoint := range endpoints {
-			if !strings.Contains(endpoint, instance) {
-				updatedInstances = append(updatedInstances, instance)
+			if endpoint == instance {
+				instaceExist = true
+				break
 			}
+		}
+		if !instaceExist {
+			updatedInstances = append(updatedInstances, instance)
 		}
 	}
 	service.Instances = updatedInstances
@@ -134,19 +151,20 @@ func (s *SDM) unregisterService(serviceName string, endpoints []string) error {
 }
 func (s *SDM) deleteService(serviceName string) error {
 	if !s.nametaken(serviceName) {
-		return ErrServiceDoesntExist
+		return ErrServiceDoesNotExist
 	}
 	delete(s.DataStore, serviceName)
 	return nil
 }
 func (s *SDM) renameService(serviceName string, newName string) error {
 	if !s.nametaken(serviceName) {
-		return ErrServiceDoesntExist
+		return ErrServiceDoesNotExist
 	}
 	if s.nametaken(newName) {
 		return ErrNameTaken
 	}
 	service := s.DataStore[serviceName]
+	delete(s.DataStore, serviceName)
 	s.DataStore[newName] = newEndpointService(newName, service.Instances, service.Algo)
 	return nil
 }
@@ -211,16 +229,11 @@ func (s *Server) Ping(ctx context.Context, in *emptypb.Empty) (*PingReply, error
 
 /*
  */
-func (s *Server) HeartBeat(ctx context.Context, in *HeartBeatRequest) (*emptypb.Empty, error) {
-	return nil, nil
-}
-
-/*
- */
 func (s *Server) RegisterService(ctx context.Context, in *RegisterServiceRequest) (*GenericResponse, error) {
 	fmt.Println("RegisterService (in) :", in)
 	endpoints := parseEndpoints(in.Endpoints)
 	endpoints = removeDuplicates(endpoints)
+
 	err := s.Manager.registerService(in.ServiceName, endpoints, in.Algo.String())
 	if err != nil {
 		return &GenericResponse{SuccessCode: Failure, Message: err.Error()}, err
@@ -233,7 +246,11 @@ func (s *Server) RegisterService(ctx context.Context, in *RegisterServiceRequest
 func (s *Server) AddInstance(ctx context.Context, in *AddInstanceRequest) (*GenericResponse, error) {
 	fmt.Println("AddInstance (in) :", in)
 	endpoint := parseEndpoints(in.Endpoints)
-	err := s.Manager.addInstance(in.ServiceName, endpoint[0])
+	if len(endpoint) == 0 {
+		err := errors.New("no endpoints provided")
+		return &GenericResponse{SuccessCode: Failure, Message: err.Error()}, err
+	}
+	err := s.Manager.batchAddInstance(in.ServiceName, endpoint)
 	if err != nil {
 		return &GenericResponse{SuccessCode: Failure, Message: err.Error()}, err
 	}
