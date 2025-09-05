@@ -203,7 +203,7 @@ func removeDuplicates(endpoints []string) []string {
 	}
 	return res
 }
-func parseEndpoints(endpoints []*ServiceEndpoint) []string {
+func ParseEndpoints(endpoints []*ServiceEndpoint) []string {
 	var res []string
 	for _, endpoint := range endpoints {
 		endpoint.IP = strings.TrimSpace(endpoint.IP)
@@ -231,7 +231,7 @@ func (s *Server) Ping(ctx context.Context, in *emptypb.Empty) (*PingReply, error
  */
 func (s *Server) RegisterService(ctx context.Context, in *RegisterServiceRequest) (*GenericResponse, error) {
 	fmt.Println("RegisterService (in) :", in)
-	endpoints := parseEndpoints(in.Endpoints)
+	endpoints := ParseEndpoints(in.Endpoints)
 	endpoints = removeDuplicates(endpoints)
 
 	err := s.Manager.registerService(in.ServiceName, endpoints, in.Algo.String())
@@ -245,7 +245,7 @@ func (s *Server) RegisterService(ctx context.Context, in *RegisterServiceRequest
  */
 func (s *Server) AddInstance(ctx context.Context, in *AddInstanceRequest) (*GenericResponse, error) {
 	fmt.Println("AddInstance (in) :", in)
-	endpoint := parseEndpoints(in.Endpoints)
+	endpoint := ParseEndpoints(in.Endpoints)
 	if len(endpoint) == 0 {
 		err := errors.New("no endpoints provided")
 		return &GenericResponse{SuccessCode: Failure, Message: err.Error()}, err
@@ -261,7 +261,7 @@ func (s *Server) AddInstance(ctx context.Context, in *AddInstanceRequest) (*Gene
  */
 func (s *Server) UnregisterService(ctx context.Context, in *RegisterServiceRequest) (*GenericResponse, error) {
 	fmt.Println("UnregisterService (in) :", in)
-	endpoints := parseEndpoints(in.Endpoints)
+	endpoints := ParseEndpoints(in.Endpoints)
 	err := s.Manager.unregisterService(in.ServiceName, endpoints)
 	if err != nil {
 		return &GenericResponse{SuccessCode: Failure, Message: err.Error()}, err
@@ -319,6 +319,23 @@ func encodeEndPoints(endPointService []*EndpointService) []*MetricsResponseServi
 			Endpoints:    toEndpointList(service.Instances),
 		}
 		res = append(res, &v)
+	}
+	return res
+}
+func InstanceToEndpoints(instances []string) []*ServiceEndpoint {
+	var res []*ServiceEndpoint
+	for _, instance := range instances {
+		parts := strings.Split(instance, ":")
+		if len(parts) == 2 {
+			port, err := strconv.Atoi(parts[1])
+			if err != nil {
+				continue
+			}
+			res = append(res, &ServiceEndpoint{
+				IP:   parts[0],
+				Port: int32(port),
+			})
+		}
 	}
 	return res
 }
