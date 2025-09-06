@@ -1,0 +1,16 @@
+FROM golang:1.25-alpine
+
+# Create working directory under /app
+WORKDIR /app
+# Copy over all go config (go.mod, go.sum etc.)
+COPY . .
+
+RUN go mod download
+# Copy over Go source code
+COPY . . 
+# Run the Go build and output binary under smd_server
+RUN go build -o smd
+
+EXPOSE 50051
+# Run the app binary when we run the container
+ENTRYPOINT ["./smd"]

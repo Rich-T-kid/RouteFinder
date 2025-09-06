@@ -1,7 +1,7 @@
 package ServiceDiscoveryManager
 
 import (
-	api "RouteFinder/API"
+	"RouteFinder/api"
 	"context"
 	"errors"
 	"fmt"
@@ -40,7 +40,7 @@ func (b SDMConfigBuilder) Build() SDMConfig {
 		b.timeout = 3 * time.Second
 	}
 	if b.retryCount <= 0 || b.retryCount > 8 {
-		b.retryCount = 3
+		b.retryCount = 2
 	}
 	if b.logLocation == "" {
 		b.logLocation = "sdm.log"
